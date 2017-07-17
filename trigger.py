@@ -1,13 +1,15 @@
-from wxpy import *
-
 import threading
 import time
+import request
+import json
+import weather
 
 isSend   = 0
 nextSend = None;
 
 def sendMsgGroup(nextSend):
 	print(nextSend and nextSend or "first send");
+	weather.weather()
 	pass
 
 def trigger(isSend, nextSend):
@@ -35,5 +37,3 @@ def trigger(isSend, nextSend):
 
 	#print(str(nowArray.tm_year) + "-" + str(nowArray.tm_mon) + "-" + str(nowArray.tm_mday))
 	threading.Timer(1, trigger, (isSend, nextSend)).start()
-
-trigger(isSend, nextSend)
