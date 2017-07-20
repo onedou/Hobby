@@ -1,3 +1,5 @@
+from wxpy import *
+
 import threading
 import time
 import request
@@ -37,3 +39,7 @@ def trigger(isSend, nextSend):
 
 	#print(str(nowArray.tm_year) + "-" + str(nowArray.tm_mon) + "-" + str(nowArray.tm_mday))
 	threading.Timer(1, trigger, (isSend, nextSend)).start()
+
+trigger(isSend, nextSend)
+
+embed()
