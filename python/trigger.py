@@ -1,45 +1,48 @@
-from wxpy import *
-
+import types
 import threading
 import time
 import request
 import json
-import weather
 
-isSend   = 0
-nextSend = None;
-
-def sendMsgGroup(nextSend):
-	print(nextSend and nextSend or "first send");
-	weather.weather()
-	pass
-
-def trigger(isSend, nextSend):
-	if nextSend and int(time.time()) >= nextSend:
-		isSend = 0
-
+def trigger(isSend, setTimeDict, callback):
 	if isSend == 0:
-		sendMsgGroup(nextSend)
-		nextSend = None
+		if type(callback) == types.FunctionType:
+			callback()
+
 		isSend = 1
 		pass
 
-	if not nextSend:
-		nextDate      = int(time.time() + 86400)
-		nextDateArray = time.localtime(nextDate)
-		
-		nextDateStr   = str(nextDateArray.tm_year) + "-" + str(nextDateArray.tm_mon) + "-" + str(nextDateArray.tm_mday) + " " + \
-				        str(9) + ":" + str(30) + ":" + str(0)
+	now      = int(time.time())
+	nowArray = time.localtime(now);
 
-		#print(nextDate)
-		nextDateArray = time.strptime(nextDateStr, "%Y-%m-%d %H:%M:%S")
-		print(nextDateArray)
-		nextDate = time.mktime(nextDateArray)
-		nextSend = nextDate
+	setTimeStr = str(nowArray.tm_year) + "-" + str(nowArray.tm_mon) + "-" + str(nowArray.tm_mday) + " " + \
+				 str(setTimeDict["h"]) + ":" + str(setTimeDict["m"]) + ":" + str(setTimeDict["s"])
+	setTime    = time.mktime(time.strptime(setTimeStr, "%Y-%m-%d %H:%M:%S"))
 
-	#print(str(nowArray.tm_year) + "-" + str(nowArray.tm_mon) + "-" + str(nowArray.tm_mday))
-	threading.Timer(1, trigger, (isSend, nextSend)).start()
+	if now < setTime:
+		nextTime = setTime
+		pass
+	else:
+		nextDay      = int(time.time() + 86400)
+		nextDayArray = time.localtime(nextDay)
 
-trigger(isSend, nextSend)
+		nextDayStr = str(nextDayArray.tm_year) + "-" + str(nextDayArray.tm_mon) + "-" + str(nextDayArray.tm_mday) + " " + \
+					 str(setTimeDict["h"]) + ":" + str(setTimeDict["m"]) + ":" + str(setTimeDict["s"])
 
-embed()
+		nextDayTime = time.mktime(time.strptime(nextDayStr, "%Y-%m-%d %H:%M:%S"))
+
+		nextTime = nextDayTime
+		pass
+
+	remaining = int(nextTime - int(time.time()))
+	print(remaining)
+
+	isSend = 0
+
+	threading.Timer(remaining, trigger, (isSend, setTimeDict, callback)).start()
+
+def myNotice():
+    print("OK");
+    pass
+
+trigger(1, {"h":16,"m":17,"s":0}, myNotice)

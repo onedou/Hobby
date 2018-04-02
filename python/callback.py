@@ -1,10 +1,12 @@
-def abc(callback):
-	callback();
+def abc(callback,*params):
+	callback(*params);
 	pass
 
-def efg():
-	print("ok")
+def efg(*params):
+	testa,testb = params
+	print(testa)
+	print(testb)
 	pass
 
 
-abc(efg)
+abc(efg,"a","b")
