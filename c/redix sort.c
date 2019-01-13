@@ -48,3 +48,4 @@ void radixsort(int data[],int n) //基数排序
     }
     delete [] tmp;
     delete [] count;
+}
