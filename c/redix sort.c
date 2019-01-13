@@ -48,9 +48,3 @@ void radixsort(int data[],int n) //基数排序
     }
     delete [] tmp;
     delete [] count;
-
---------------------- 
-作者：笨笨呆 
-来源：CSDN 
-原文：https://blog.csdn.net/u014141559/article/details/38497993 
-版权声明：本文为博主原创文章，转载请附上博文链接！
