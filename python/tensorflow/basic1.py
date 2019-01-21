@@ -26,14 +26,14 @@ print(plt.cm.binary)
 
 plt.figure(figsize=(10, 10))
 
-for i in range(25):
-  print(i)
-  plt.subplot(5,5,i+1)
-  plt.xticks([])
-  plt.yticks([])
-  plt.grid(False)
-  plt.imshow(train_images[i], camp=plt.cm.binary)
-  plt.xlabel(class_names[train_labels[i]])
+# for i in range(25):
+#   print(i)
+#   plt.subplot(5,5,i+1)
+#   plt.xticks([])
+#   plt.yticks([])
+#   plt.grid(False)
+#   plt.imshow(train_images[i], camp=plt.cm.binary)
+#   plt.xlabel(class_names[train_labels[i]])
 
 # plt.imshow(train_images[0])
 # plt.colorbar()
