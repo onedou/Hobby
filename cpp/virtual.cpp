@@ -16,6 +16,25 @@ public:
   void test() { cout << "inheriter func" << endl; }
 };
 
+
+// 虚基类
+class mytest: virtual public base
+{
+public:
+  void test() { cout << "mytest class func" << endl; }
+};
+
+class mytest2: virtual public base
+{
+public:
+  // void test() { cout << "mytest2 class func" << endl; }
+};
+
+class mytest3: public mytest, public mytest2
+{
+
+};
+
 int main()
 {
   cout << "Hello World!" << endl;
@@ -27,6 +46,10 @@ int main()
   p1->test();
   p2->test();
   (*p3).test();
+
+  base *p4 = new mytest3;
+
+  p4->test();
 
   return 0;
 }
